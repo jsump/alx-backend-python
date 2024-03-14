@@ -7,10 +7,10 @@ listof dloats and intergers as a float
 """
 
 
-from typing import List
+from typing import List, Union
 
 
-def sum_mixed_list(mxd_lst: List[float]) -> float:
+def sum_mixed_list(mxd_lst: List[Union[int, float]]) -> float:
     """
     this function takes a mixed list of integers and floats,
     mxd_lst and returns their sum as float
