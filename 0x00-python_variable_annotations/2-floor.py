@@ -6,12 +6,9 @@ This module contains a function that returns the floor of the float
 """
 
 
-import math
-
-
 def floor(n: float) -> float:
     """
     This method takes n as argumrnt and returns the floor
     of the float.
     """
-    return math.floor(n)
+    return int(n)
