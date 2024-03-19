@@ -7,10 +7,10 @@ This module contains a fucntion that takes no arguments
 
 import asyncio
 import random
-from typing import AsyncGenerator
+from typing import AsyncIterable
 
 
-async def async_generator() -> AsyncGenerator[float, None]:
+async def async_generator() -> AsyncIterable[float]:
     """
     This method takes no arguments.
 
