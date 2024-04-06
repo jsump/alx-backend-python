@@ -11,7 +11,7 @@ from parameterized import parameterized
 from utils import access_nested_map
 
 
-class TesteAccessNestedMap(unittest.TestCase):
+class TestAccessNestedMap(unittest.TestCase):
     """
     This class contains the unit testst
     """
