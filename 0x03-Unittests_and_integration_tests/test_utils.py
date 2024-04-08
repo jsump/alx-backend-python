@@ -9,12 +9,12 @@ First unit test for utils.access_nested_map
 import unittest
 from unittest.mock import patch, Mock
 from parameterized import parameterized
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
     """
-    This class contains the unit testst
+    This class tests the utils.access_nested_map
     """
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
@@ -42,7 +42,7 @@ class TestGetJson(unittest.TestCase):
     This class tests that utils.get_json returns the expected result
     """
     @parameterized.expand([
-        ("http://expample.com", {"payload": True}),
+        ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
         ])
     @patch('requests.get')
@@ -59,6 +59,33 @@ class TestGetJson(unittest.TestCase):
 
         mock_requests_get.assert_called_once_with(test_url)
         self.assertEqual(result, test_payload)
+
+
+class TestMemoize(unittest.TestCase):
+    """
+    This calss tests the utils.memoize decorator
+    """
+    def test_memoize(self):
+        """
+        This methos tests the expected result of utils.memoize
+        """
+        class TestClass:
+            
+            def a_method(self):
+                return 42
+            
+            @memoize
+            def a_property(self):
+                return self.a_method()
+
+        with patch.object(TestClass, 'a_method', return_value=42) as mock_method:
+            test_instance = TestClass()
+            result1 = test_instance.a_property()
+            result2 = test_instance.a_property()
+
+            mock_method.assert_called_once()
+            self.assertEqual(result1, 42)
+            self.assertEqual(result2, 42)
 
 
 if __name__ == "__main__":
