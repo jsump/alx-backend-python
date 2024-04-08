@@ -27,15 +27,15 @@ class TestGithubOrgClient(unittest.TestCase):
         This metod tests if GithubOrgClient.rg returns the correct value
         """
         test_url = f'https://api.github.com/orgs/{org_name}'
-        expected_result = mock_get.return_value
-        expected_result.json.return_value = {"payload": "test_payload"}
+        expected_result = {"payload": "test_payload"}
+
+        mock_get_json.return_value = expected_result
 
         client = GithubOrgClient(org_name)
         response = client.org
 
         self.assertEqual(response, expected_result.json.return_value)
         mock_get.assert_called_once_with(test_url)
-        expected_result.json.assert_called_once()
 
     @patch('client.GithubOrgClient.org', return_value={
         "login": "test_org",
