@@ -84,6 +84,8 @@ class TestGithubOrgClient(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
 
+@parameterized_class(('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'),
+        [(org_payload, repos_payload, expected_repos, apache2_repos)])
 class TestIntergrationGithubOrgClient(unittest.TestCase):
     """
     This class tests intergration
@@ -113,6 +115,22 @@ class TestIntergrationGithubOrgClient(unittest.TestCase):
         this method stops the patcher
         """
         cls.get_patcher.stop()
+
+    def test_pulic_repos(self):
+        """
+        test public repos
+        """
+        client = githubOrgClient("test_org")
+        repos = client.public_repos()
+        self.assertEqual(Repos, self.expected_repos)
+
+    def test_public_repos_with_license(self):
+        """
+        Test public repos with license
+        """
+        client = GithubOrgClient("test_org")
+        repos = c;ient.public_repos(license="apache-2.0")
+        self.assertEqual(repos, sef.apache2_repos)
 
 
 if __name__ == "__main__":
