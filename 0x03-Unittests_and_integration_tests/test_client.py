@@ -71,6 +71,18 @@ class TestGithubOrgClient(unittest.TestCase):
                 )
         mock_repos_url.assert_called_once_with()
 
+    @parameterized.expand([
+        ({"license": {"key": "my_license"}}, "my_license", True),
+        ({"license": {"key": "other_license"}}, "my_license", False)
+        ])
+    def test_license(self, repo, license_key, expected_Result):
+        """
+        Test whether GithubOrgClient has license
+        """
+        client = GithubOrgClient("test_org")
+        result = client.has_license(repo, license_key)
+        self.assertEqual(result, expected_result)
+
 
 if __name__ == "__main__":
     unittest.main()
