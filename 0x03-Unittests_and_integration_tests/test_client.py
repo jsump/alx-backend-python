@@ -10,6 +10,7 @@ import unittest
 from unittest.mock import patch
 from parameterized import parameterized
 from client import GithubOrgClient
+from utils import get_json
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -49,6 +50,26 @@ class TestGithubOrgClient(unittest.TestCase):
                 client._public_repos_url,
                 "https://api.github.com/orgs/test_org/repos"
                 )
+
+    @patch('client.GithubOrgClient._public_repos_url')
+    @patch('client.GithubOrgClient.get_json')
+    def test_public_repos(aelf, mock_get_json, mock_repos_url):
+        """
+        this method test list of repos from chosen payload
+        """
+        mock_repos_url.return_value = "https://api.github.com/mock/repos"
+
+        mock_response = [{"name": "Repo 1"}, {"name": "Repo 2"}]
+        mock_get_json.return_value = mock_response
+
+        client = GithubOrgClient("org")
+        repos = client.public_repos()
+
+        self.assertEqual(repos, mock_response)
+        mock_get_json.assert_Called_once_with(
+                "https://api.github.com/mock/repos"
+                )
+        mock_repos_url.assert_called_once_with()
 
 
 if __name__ == "__main__":
