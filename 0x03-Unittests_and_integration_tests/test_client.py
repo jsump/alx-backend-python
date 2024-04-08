@@ -84,5 +84,36 @@ class TestGithubOrgClient(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
 
+class TestIntergrationGithubOrgClient(unittest.TestCase):
+    """
+    This class tests intergration
+    """
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up class
+        """
+        clas.get_patcher = patch('requests.get')
+        cls.mock_get = cls.get_patcher.start()
+
+        def side_effect(url):
+            """
+            This method makes sure the mock or requests returns correct values
+            """
+            if url == 'https://api/github.con/orgs/test_org':
+                return Mock(json= ambda: cls.org_payload)
+            elif url == 'https://api.github.com/orgs/test_org/reos':
+                return Mock(json=lambda: cls.repos_payload)
+
+        cls.mock_get.side_effect = side_effect
+
+    @classmethod
+    def tearDownclass(cls):
+        """
+        this method stops the patcher
+        """
+        cls.get_patcher.stop()
+
+
 if __name__ == "__main__":
     unittest.main()
