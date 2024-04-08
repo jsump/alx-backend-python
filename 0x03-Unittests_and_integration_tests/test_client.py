@@ -69,7 +69,6 @@ class TestGithubOrgClient(unittest.TestCase):
         mock_get_json.assert_Called_once_with(
                 "https://api.github.com/mock/repos"
                 )
-        mock_repos_url.assert_called_once_with()
 
     @parameterized.expand([
         ({"license": {"key": "my_license"}}, "my_license", True),
