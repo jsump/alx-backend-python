@@ -83,7 +83,13 @@ class TestGithubOrgClient(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
 
-@parameterized_class(('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'),
+@parameterized_class(
+        (
+            'org_payload',
+            'repos_payload',
+            'expected_repos',
+            'apache2_repos'
+            ),
         [(org_payload, repos_payload, expected_repos, apache2_repos)])
 class TestIntergrationGithubOrgClient(unittest.TestCase):
     """
@@ -102,7 +108,7 @@ class TestIntergrationGithubOrgClient(unittest.TestCase):
             This method makes sure the mock or requests returns correct values
             """
             if url == 'https://api/github.com/orgs/test_org':
-                return Mock(json= ambda: cls.org_payload)
+                return Mock(json=lambda: cls.org_payload)
             elif url == 'https://api.github.com/orgs/test_org/repos':
                 return Mock(json=lambda: cls.repos_payload)
 
