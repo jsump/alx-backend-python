@@ -73,10 +73,12 @@ class TestMemoize(unittest.TestCase):
         class TestClass:
             
             def a_method(self) -> int:
-                return 42
+               """methos"""
+               return 42
             
             @memoize
-            def a_property(self) -> int:
+            def a_property(self) -> Callable[..., Any]:
+                """property"""
                 return self.a_method()
 
         with patch.object(TestClass, 'a_method', return_value=lambda: 42) as mock_method:
