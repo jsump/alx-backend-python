@@ -71,6 +71,7 @@ class TestMemoize(unittest.TestCase):
         This methos tests the expected result of utils.memoize
         """
         class TestClass:
+            """TestClass"""
             
             def a_method(self) -> int:
                """methos"""
