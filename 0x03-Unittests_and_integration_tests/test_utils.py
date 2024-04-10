@@ -10,6 +10,7 @@ import unittest
 from unittest.mock import patch, Mock
 from parameterized import parameterized
 from utils import access_nested_map, get_json, memoize
+from typing import Any, Callable
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -71,11 +72,11 @@ class TestMemoize(unittest.TestCase):
         """
         class TestClass:
             
-            def a_method(self):
+            def a_method(self) -> int:
                 return 42
             
             @memoize
-            def a_property(self):
+            def a_property(self) -> Callable[..., Any]:
                 return self.a_method()
 
         with patch.object(TestClass, 'a_method', return_value=lambda: 42) as mock_method:
