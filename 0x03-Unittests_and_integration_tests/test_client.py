@@ -101,9 +101,9 @@ class TestIntergrationGithubOrgClient(unittest.TestCase):
             """
             This method makes sure the mock or requests returns correct values
             """
-            if url == 'https://api/github.con/orgs/test_org':
+            if url == 'https://api/github.com/orgs/test_org':
                 return Mock(json= ambda: cls.org_payload)
-            elif url == 'https://api.github.com/orgs/test_org/reos':
+            elif url == 'https://api.github.com/orgs/test_org/repos':
                 return Mock(json=lambda: cls.repos_payload)
 
         cls.mock_get.side_effect = side_effect
@@ -115,21 +115,21 @@ class TestIntergrationGithubOrgClient(unittest.TestCase):
         """
         cls.get_patcher.stop()
 
-    def test_pulic_repos(self):
+    def test_puplic_repos(self):
         """
         test public repos
         """
         client = githubOrgClient("test_org")
         repos = client.public_repos()
-        self.assertEqual(Repos, self.expected_repos)
+        self.assertEqual(repos, self.expected_repos)
 
     def test_public_repos_with_license(self):
         """
         Test public repos with license
         """
         client = GithubOrgClient("test_org")
-        repos = c;ient.public_repos(license="apache-2.0")
-        self.assertEqual(repos, sef.apache2_repos)
+        repos = client.public_repos(license="apache-2.0")
+        self.assertEqual(repos, self.apache2_repos)
 
 
 if __name__ == "__main__":
